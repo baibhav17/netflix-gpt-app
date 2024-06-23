@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import LoginHeader from './LoginHeader';
 import LoginFooter from './LoginFooter';
+import { validateEmail, validatePassword } from '../utils/validation';
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true)
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [userNameError, setUserNameError] = useState('')
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -12,6 +16,25 @@ const Login = () => {
 
     const handleSignUp = () => {
         setIsSignInForm(!isSignInForm)
+    }
+
+    const email = useRef(null)
+    const password = useRef(null)
+    const userName = useRef(null)
+
+    const handleSubmitBtn = () => {
+        const emailValidationResult = validateEmail(email.current.value)
+        const passwordValidationResult = validatePassword(password.current.value)
+        if(emailValidationResult) {
+            setEmailError(emailValidationResult)
+        }
+        if(passwordValidationResult) {
+            setPasswordError(passwordValidationResult)
+        }
+
+        if(!isSignInForm && userName.current.value.length == 0) {
+            setUserNameError('User Name can not be empty.')
+        }
     }
 
     return (
@@ -29,11 +52,14 @@ const Login = () => {
                 onClick={handleFormSubmit}
             >
                 <h1 className='font-bold text-2xl mx-auto my-2 relative left-[40%] '>{isSignInForm ? 'Sign In' : 'Sign Up'}</h1>
-                {!isSignInForm && <input className='p-4 m-2 w-full bg-gray-700' type='text' placeholder='enter User Name' /> }
-                <input className='p-4 m-2 w-full bg-gray-700' type='text' placeholder='enter email address' />
-                <input className='p-4 m-2 w-full bg-gray-700' type='password' placeholder='enter password' />
+                {!isSignInForm && <input ref={userName} onFocus={()=>setUserNameError('')} className='p-4 m-2 w-full bg-gray-700' type='text' placeholder='enter User Name' /> }
+                {userNameError && <label className='p-4 text-red-400'>{userNameError}</label>}
+                <input ref={email} onFocus={()=>setEmailError('')} on className='p-4 m-2 w-full bg-gray-700' type='text' placeholder='enter email address' />
+                {emailError && <label className='p-4 text-red-400'>{emailError}</label>}
+                <input ref={password} onFocus={()=>setPasswordError('')} className='p-4 m-2 w-full bg-gray-700' type='password' placeholder='enter password' />
+                {passwordError && <label className='p-4 text-red-400'>{passwordError}</label>}
                 <br />
-                <button className='p-2 m-2 w-full bg-red-500 rounded-lg'>{isSignInForm ? 'Sign In' : 'Sign Up'}</button>
+                <button className='p-2 m-2 w-full bg-red-500 rounded-lg' onClick={handleSubmitBtn}>{isSignInForm ? 'Sign In' : 'Sign Up'}</button>
                 <label onClick={handleSignUp} className='cursor-pointer'>{isSignInForm ? 'New to Netflix? Sign up now' : 'Already a Member? Sign In'} </label>
             </form>
 
