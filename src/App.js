@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import Body from './components/Body';
 
 const App = () => {
   return (
-    <div className='text-2xl bg-slate-100'>
-      Netflix GPT Clone
+    <div>
+      <Body />
     </div>
   )
 }
