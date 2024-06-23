@@ -54,13 +54,35 @@ const Login = () => {
                 <h1 className='font-bold text-2xl mx-auto my-2 relative left-[40%] '>{isSignInForm ? 'Sign In' : 'Sign Up'}</h1>
                 {!isSignInForm && <input ref={userName} onFocus={()=>setUserNameError('')} className='p-4 m-2 w-full bg-gray-700' type='text' placeholder='enter User Name' /> }
                 {userNameError && <label className='p-4 text-red-400'>{userNameError}</label>}
-                <input ref={email} onFocus={()=>setEmailError('')} on className='p-4 m-2 w-full bg-gray-700' type='text' placeholder='enter email address' />
+                <input 
+                    ref={email} 
+                    onFocus={()=>setEmailError('')} 
+                    className='p-4 m-2 w-full bg-gray-700' 
+                    type='text' 
+                    placeholder='enter email address' 
+                />
                 {emailError && <label className='p-4 text-red-400'>{emailError}</label>}
-                <input ref={password} onFocus={()=>setPasswordError('')} className='p-4 m-2 w-full bg-gray-700' type='password' placeholder='enter password' />
+                <input 
+                    ref={password} 
+                    onFocus={()=>setPasswordError('')} 
+                    className='p-4 m-2 w-full bg-gray-700' 
+                    type='password' 
+                    placeholder='enter password'
+                />
                 {passwordError && <label className='p-4 text-red-400'>{passwordError}</label>}
                 <br />
-                <button className='p-2 m-2 w-full bg-red-500 rounded-lg' onClick={handleSubmitBtn}>{isSignInForm ? 'Sign In' : 'Sign Up'}</button>
-                <label onClick={handleSignUp} className='cursor-pointer'>{isSignInForm ? 'New to Netflix? Sign up now' : 'Already a Member? Sign In'} </label>
+                <button 
+                    className='p-2 m-2 w-full bg-red-500 rounded-lg' 
+                    onClick={handleSubmitBtn}
+                >
+                    {isSignInForm ? 'Sign In' : 'Sign Up'}
+                </button>
+                <label 
+                    onClick={handleSignUp} 
+                    className='cursor-pointer'
+                >
+                    {isSignInForm ? 'New to Netflix? Sign up now' : 'Already a Member? Sign In'}
+                </label>
             </form>
 
             <LoginFooter />
